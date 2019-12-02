@@ -35,7 +35,7 @@ def random_date():
 def random_string(length=12):
     characters = string.ascii_letters
     return ''.join(random.choice(characters) for i in range(length))
-
+#hello
 def random_name():
     fake = Faker()
     return (fake.name())
