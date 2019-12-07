@@ -3,7 +3,15 @@ from sqlite3 import Error
 import random
 import string
 from faker import Faker
+import time
 from pydbgen import pydbgen
+from random import randrange
+from datetime import timedelta, datetime
+import secrets
+import string
+
+
+
 
 
 
@@ -21,21 +29,60 @@ def clear_column():
 
 def insert_values():
     name = random_name()
-    for i in range(2):
+    for i in range(105010):
+        d1 = datetime.strptime('1/1/2000', '%m/%d/%Y')
+        d2 = datetime.strptime('12/1/2019', '%m/%d/%Y')
+
         #c.execute("INSERT INTO UserTest(name) VALUES (?)", ([random_name()]))
-        c.execute("INSERT INTO UserTest(username, name, email) VALUES (?, ?, ?)", ([random_string(12), random_name(), random_email()]))
+        #c.execute("INSERT INTO Users_1(username, name, email) VALUES (?, ?, ?)", ([random_string(12), random_name(), random_email()]))
+        #c.execute("INSERT INTO Agents(specialtyid, Name, Location) VALUES (?, ?, ?)", ([random.randint(1,5), random_name(), random_city()]))
+        c.execute("INSERT INTO AgentsReviews(comments, userid, agentid) VALUES (?, ?, ?)", ([random_comment(), random.randint(1, 100000), random.randint(1,100000)]))
+        #c.execute("INSERT INTO Houses(stateid, price, ForTypeid, bedrooms, SquareFeet, HomeTypeid, dateAdded) VALUES (?, ?, ?, ?, ?, ?, ?)", ([random.randint(1,50), random.randint(25000,100000000), random.randint(1,3), random.randint(1,10), random.randint(1000, 100000), random.randint(1,5), random_date(d1,d2)]))
+        #c.execute("INSERT INTO Users(username, name, email, datejoined, password) VALUES (?, ?, ?,?,?)", ([random_string(12), random_name(), random_email(), random_date(d1,d2), random_password()]))
+        #c.execute("INSERT INTO Houses_1(userid) VALUES (?)", ([random.randint(114, 213)]))
+        #c.execute("Insert into Listings(Houseid, agentid) VALUES (?,?)", ([random.randint(1, 100000), random.randint(1,100000)]))
+        #c.execute("INSERT INTO SavedHouses(userid, houseid)  VALUES (?, ?)", ([random.randint(1,10402), (random.randint(1,10402))]))
+
+
     conn.commit()
 
 
-def random_date():
-    fake2 = pydbgen.pydb()
-    testing = fake2.realistic_email()
+def random_password():
+    alphabet = string.ascii_letters + string.digits
+    password = ''.join(secrets.choice(alphabet) for i in range(20))
+    return(password)
+
+def random_comment():
+    fake = Faker()
+
+    sentence = [
+        'great', 'professional', 'smart', 'helped', 'find', 'a',
+        'home', 'really', 'cares','about', 'finding', 'beautiful',
+        'late', 'patient', 'with', 'us', 'in', 'the', 'process', 'maintained', 'lowkey'
+    ]
+    return fake.sentence()
+
+def random_date(start, end):
+    """
+    This function will return a random datetime between two datetime
+    objects.
+    """
+    delta = end - start
+    int_delta = (delta.days * 24 * 60 * 60) + delta.seconds
+    random_second = randrange(int_delta)
+    return start + timedelta(seconds=random_second)
 
 
-def random_string(length=12):
+
+def random_city():
+    my_db = pydbgen.pydb()
+    return (my_db.city_real())
+
+def random_string(length=15):
     characters = string.ascii_letters
     return ''.join(random.choice(characters) for i in range(length))
 #hello
+
 def random_name():
     fake = Faker()
     return (fake.name())
@@ -43,7 +90,6 @@ def random_name():
 def random_email():
     fake = Faker()
     return (fake.email())
-
 
 
 
@@ -65,3 +111,4 @@ def create_connection(db_file):
 
 # create_table()
 insert_values()
+
