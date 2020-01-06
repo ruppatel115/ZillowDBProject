@@ -1,4 +1,7 @@
 # ZillowDBProject
+Hello! Welcome to my version of a Zillow Database! To access the database please follow the steps below
+
+
 Open up your local command line and paste link below to access AWS hosted database:
 
 psql -h zillow.cfnpydopbn5f.us-east-2.rds.amazonaws.com -p 5432 -U postgres
