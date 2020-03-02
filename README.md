@@ -5,10 +5,10 @@ Have latest version of Postgres downloaded onto your machine
 
 Open up your local command line and paste link below to access AWS hosted database:
 
-psql -h zillow.cfnpydopbn5f.us-east-2.rds.amazonaws.com -p 5432 -U postgres
+psql -h zillow.cfnpydopbn5f.us-east-2.rds.amazonaws.com -p 5432 -d postgres -U guests
 
 
-user password: zillow123
+user password: zillowpass
 
 from here you can access and manipulate database however you please; below are some queries I have created: 
 
